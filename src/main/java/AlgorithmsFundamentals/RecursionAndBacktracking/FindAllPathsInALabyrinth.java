@@ -43,33 +43,31 @@ public class FindAllPathsInALabyrinth {
 
         if (labyrinth[row][col] == 'e') {
             printPath();
-            path.remove(path.size() - 1);
-            return;
+        }else {
+            labyrinth[row][col] = 'V';
+
+            findPath(labyrinth, row - 1, col, 'U');
+            findPath(labyrinth, row + 1, col, 'D');
+            findPath(labyrinth, row, col - 1, 'L');
+            findPath(labyrinth, row, col + 1, 'R');
+
+            labyrinth[row][col] = '-';
         }
 
-        labyrinth[row][col] = 'V';
-
-        findPath(labyrinth, row - 1, col, 'U');
-        findPath(labyrinth, row + 1, col, 'D');
-        findPath(labyrinth, row, col - 1, 'L');
-        findPath(labyrinth, row, col + 1, 'R');
-
-        labyrinth[row][col] = '-';
         path.remove(path.size() - 1);
     }
 
     private static void printPath() {
 
         for (Character character : path) {
-            if(character == ' '){
-                continue;
+            if(character != ' '){
+                System.out.print(character);
             }
-            System.out.print(character);
         }
         System.out.println();
     }
 
     private static boolean isInBounds(char[][] labyrinth, int row, int col) {
-        return row < labyrinth.length && row >= 0 && col < labyrinth[row].length && col >= 0;
+        return row >= 0 && row < labyrinth.length  && col >= 0 && col < labyrinth[row].length;
     }
 }
